@@ -39,7 +39,7 @@ if len(nag_nums) % 2 == 1:
     elif zero == 0:
         sum += nag_nums[-1]
 
-for i in range(one):
-    sum += 1
+# 남은 1 더하기
+sum += one
 
 print(sum)
