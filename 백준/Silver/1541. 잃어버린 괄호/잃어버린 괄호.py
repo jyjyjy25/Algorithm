@@ -1,24 +1,17 @@
 import sys
 
-expression = sys.stdin.readline().strip()
+A = list(sys.stdin.readline().rstrip().split('-'))
 
-A = expression.split('-')
-B = []
+cal = []
+for i in range(len(A)):
+    result = 0
+    temp = list(A[i].split('+'))
+    for t in temp:
+        result += int(t)
+    cal.append(result)
 
-new_expression = ""
-for a in A:
-    B = map(str, map(int, a.split('+')))
-    new_expression += '+'.join(B)
-    new_expression += '-'
-new_expression = new_expression[:-1]
+ans = cal[0]
+for i in range(1, len(cal)):
+    ans -= cal[i]
 
-new_str = "("
-for i, s in enumerate(new_expression):
-    if s == '-':
-        new_str += ")-("
-    else:
-        new_str += s
-
-new_str += ')'
-
-print(eval(new_str))
+print(ans)
