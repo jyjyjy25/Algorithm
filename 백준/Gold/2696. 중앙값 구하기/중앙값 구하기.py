@@ -9,12 +9,9 @@ for _ in range(T):
     right_heap = [] # 최소 힙
     answer = []
 
-    r = M // 10 + 1
-    arr = []
-    for _ in range(r):
-        temp = list(map(int, sys.stdin.readline().split()))
-        for t in temp:
-            arr.append(t)
+    arr = list(map(int, sys.stdin.readline().split()))
+    for i in range(M//10):
+        arr += list(map(int, sys.stdin.readline().split()))
 
     for i, a in enumerate(arr):
         if len(left_heap) == len(right_heap):
@@ -28,7 +25,7 @@ for _ in range(T):
             heapq.heappush(left_heap, -small)
             heapq.heappush(right_heap, -large)
         
-        if i % 2 == 0:
+        if (i+1) % 2 == 1:
             answer.append(-left_heap[0])
     
     print(len(answer))
