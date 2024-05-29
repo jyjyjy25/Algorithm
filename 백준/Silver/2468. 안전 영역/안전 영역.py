@@ -2,15 +2,15 @@ import sys
 from collections import deque
 
 N = int(sys.stdin.readline())
-# maps = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+maps = []
+max_height = 0
+
+for _ in range(N):
+    maps.append(list(map(int, sys.stdin.readline().split())))
+    max_height = max(max_height, max(maps[-1]))
 
 dx = [0, 0, 1, -1]
 dy = [1, -1, 0, 0]
-maps = []
-max_height = 0
-for _ in range(N):
-    maps.append(list(map(int, input().split())))
-    max_height = max(max_height, max(maps[-1]))
 
 
 def BFS(i, j, h):
@@ -28,8 +28,7 @@ def BFS(i, j, h):
                     queue.append((nx, ny))     
 
 
-# max_height = max(max(maps))
-area_cnt = []
+max_area = 0
 for k in range(max_height):
     visited = [[False] * N for _ in range(N)]
     cnt = 0
@@ -39,6 +38,6 @@ for k in range(max_height):
                 cnt += 1
                 BFS(i, j, k)
                 
-    area_cnt.append(cnt)
+    max_area = max(max_area, cnt)
 
-print(max(area_cnt))
+print(max_area)
