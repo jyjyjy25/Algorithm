@@ -6,7 +6,10 @@ def solution(participant, completion):
     
     for i in range(len(completion)):
         if participant[i] != completion[i]:
-            return participant[i]
+            answer = participant[i]
+            break
     
-    return participant[-1]
+    if answer == '':
+        answer = participant[-1]
     
+    return answer
