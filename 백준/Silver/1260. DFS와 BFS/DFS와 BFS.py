@@ -1,48 +1,51 @@
 import sys
 from collections import deque
-sys.setrecursionlimit(10000)
+
+
+def DFS(v, visited):
+    stack = [v]
+
+    while stack:
+        n = stack.pop()
+
+        if not visited[n]:
+            visited[n] = True
+            print(n, end=' ')
+        
+            for x in reversed(graph[n]):
+                stack.append(x)
+
+
+def BFS(v, visited):
+    queue = deque([v])
+    visited[v] = True
+
+    while queue:
+        n = queue.popleft()
+        print(n, end=' ')
+
+        for x in graph[n]:
+            if not visited[x]:
+                visited[x] = True
+                queue.append(x)
+
 
 N, M, V = map(int, sys.stdin.readline().split())
+graph = [[] for _ in range(N+1)]
 
-A = [[] for _ in range(N+1)]
-dfs_visited = [False] * (N+1)
-bfs_visited = [False] * (N+1)
-dfs_route = []
-bfs_route = []
-
+# 그래프 초기화
 for _ in range(M):
     a, b = map(int, sys.stdin.readline().split())
-    A[a].append(b)
-    A[b].append(a)
+    graph[a].append(b)
+    graph[b].append(a)
 
-for i in range(N+1):
-    A[i].sort()
+for g in graph:
+    g.sort()
 
+visited = [False] * (N+1)
+DFS(V, visited)
 
-def DFS(v):
-    dfs_visited[v] = True
-    dfs_route.append(v)
-    for i in A[v]:
-        if not dfs_visited[i]:
-            DFS(i)
+print()
 
-
-def BFS(v):
-    global dq
-    bfs_visited[v] = True
-    dq.append(v)
-    while dq:
-        node = dq.popleft()
-        bfs_route.append(node)
-        for i in A[node]:
-            if not bfs_visited[i]:
-                dq.append(i)
-                bfs_visited[i] = True
-
-
-dq = deque()
-DFS(V)
-BFS(V)
-
-print(' '.join(map(str, dfs_route)))
-print(' '.join(map(str, bfs_route)))
+visited = [False] * (N+1)
+BFS(V, visited)
