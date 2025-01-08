@@ -3,31 +3,28 @@ from collections import deque
 def solution(maps):
     N = len(maps)
     M = len(maps[0])
-
-    visited = [[False] * (M) for _ in range(N)]
     
-    dx = [1, -1, 0, 0]  # 동서남북
-    dy = [0, 0, -1, 1]
+    visited = [[False] * M for _ in range(N)]
+    xlist = [0, 0, -1, 1]  # 상하좌우
+    ylist = [1, -1, 0, 0]
     
-    def BFS():
-        queue = deque()
-        queue.append((0, 0))
-        visited[0][0] = True
+    x, y = 0, 0  # 시작 좌표
+    queue = deque([(x, y)])
+    visited[x][y] = False
+    
+    while queue:
+        x, y = queue.popleft()
         
-        while queue:
-            y, x = queue.popleft()
-            for i in range(4):
-                nx = x + dx[i]
-                ny = y + dy[i]
-                if 0 <= nx < M and 0 <= ny < N:
-                    if maps[ny][nx] and not visited[ny][nx]:
-                        visited[ny][nx] = True
-                        queue.append((ny, nx))
-                        maps[ny][nx] = maps[y][x] + 1       
-            
-    BFS()
+        for dx, dy in zip(xlist, ylist):
+            nx = x + dx
+            ny = y + dy
+            if N > nx >= 0 and M > ny >= 0:
+                if maps[nx][ny] == 1 and not visited[nx][ny]:
+                    queue.append((nx, ny))
+                    visited[nx][ny] = False
+                    maps[nx][ny] = maps[x][y] + 1
     
-    if maps[N-1][M-1]==1:
+    if maps[N-1][M-1] == 1:
         return -1
     else:
         return maps[N-1][M-1]
