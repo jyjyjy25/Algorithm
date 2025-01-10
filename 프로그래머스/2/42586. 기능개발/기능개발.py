@@ -1,19 +1,26 @@
-import math
+from collections import deque
+
 def solution(progresses, speeds):
     answer = []
     
-    release = []
-    # 배포까지 소요되는 날를 구한다.
-    for i, p in enumerate(progresses):
-        release.append(math.ceil((100-p) / speeds[i]))
+    progresses = deque(progresses)
+    speeds = deque(speeds)
     
-    while len(release) > 0:
-        tmp = release.pop(0)
-        cnt = 1
-        while len(release) > 0 and tmp >= release[0]:
-            release.pop(0)
-            cnt += 1
+    while(progresses):
+        cnt = 0
+        for i in range(len(progresses)):
+            progresses[i] = progresses[i] + speeds[i]
         
-        answer.append(cnt)
-    
+        for p in progresses:
+            if p >= 100:
+                cnt += 1
+            else:
+                break
+        
+        if cnt >= 1:
+            answer.append(cnt)
+            for i in range(cnt):
+                progresses.popleft()
+                speeds.popleft()
+
     return answer
