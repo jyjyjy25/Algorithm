@@ -1,22 +1,24 @@
-import heapq
+import heapq as hq
 
 def solution(operations):
-    heap = []
+    min_queue = []  # 최소힙
+    max_queue = []  # 최대힙
     
-    for oper in operations:
-        ch, num = oper.split(' ')
-        num = int(num)
+    for op in operations:
+        command, data = op.split()
         
-        if ch == "I":  # 삽입 연산
-            heapq.heappush(heap, num)
+        if command == "I":
+            hq.heappush(min_queue, int(data))
+            hq.heappush(max_queue, -int(data))
+        elif command == "D":
+            if data == "-1" and min_queue:
+                temp = hq.heappop(min_queue)
+                max_queue.remove(-temp)
+            elif data == "1" and max_queue:
+                temp = hq.heappop(max_queue)
+                min_queue.remove(-temp)
 
-        elif ch == "D" and len(heap):  # 삭제 연산
-            if num == -1:  # 최솟값 삭제
-                heapq.heappop(heap)
-            elif num == 1:  # 최댓값 삭제
-                heap.remove(max(heap))
-    
-    if heap:
-        return [max(heap), heapq.heappop(heap)]
+    if min_queue or max_queue:
+        return [-hq.heappop(max_queue), hq.heappop(min_queue)]
     else:
-        return [0,0]
+        return [0, 0]
