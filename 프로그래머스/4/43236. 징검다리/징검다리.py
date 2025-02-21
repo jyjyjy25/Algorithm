@@ -7,7 +7,7 @@ def solution(distance, rocks, n):
     low = 1
     high = distance
     while (low <= high):
-        mid = (low + high) // 2
+        mid = (low + high) // 2  # 바위 사이 거리의 최솟값
         
         delete = 0  # 삭제한 바위 수
         prev_rock = 0  # 이전 바위 위치
@@ -22,9 +22,8 @@ def solution(distance, rocks, n):
                 break
         
         if delete <= n:
-            answer = mid  # 최댓값 저장
             low = mid + 1  # 최댓값을 구하기 위해 커트라인 재설정
         else:
             high = mid - 1
-                
-    return answer
+    
+    return high
