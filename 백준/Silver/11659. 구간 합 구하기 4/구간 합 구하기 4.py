@@ -1,12 +1,12 @@
 import sys
 
 N, M = map(int, sys.stdin.readline().split())
-num_list = list(map(int, sys.stdin.readline().split()))
+A = list(map(int, sys.stdin.readline().split()))
 
-s = [0]
-for i, n in enumerate(num_list):
-    s.append(s[i] + n)
+S = [0]
+for i in range(N):
+    S.append(S[i] + A[i])
 
 for i in range(M):
-    i, j = map(int, sys.stdin.readline().split())
-    print(s[j] - s[i-1])
+    s, e = map(int, sys.stdin.readline().split())
+    print(S[e]-S[s-1])
