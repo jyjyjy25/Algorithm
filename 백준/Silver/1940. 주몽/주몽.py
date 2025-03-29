@@ -2,21 +2,21 @@ import sys
 
 N = int(sys.stdin.readline())
 M = int(sys.stdin.readline())
-items = list(map(int, sys.stdin.readline().split()))
+arr = list(map(int, sys.stdin.readline().split()))
+
+arr.sort()
+pointer_a = 0
+pointer_b = len(arr)-1
 
 cnt = 0
-start_pointer = 0
-end_pointer = N - 1
-
-items.sort()
-while (start_pointer < end_pointer):
-    if (items[start_pointer] + items[end_pointer] < M):
-        start_pointer = start_pointer + 1
-    elif (items[start_pointer] + items[end_pointer] > M):
-        end_pointer = end_pointer - 1
-    else:
-        cnt = cnt + 1
-        end_pointer = end_pointer - 1
-        start_pointer = start_pointer + 1
+while pointer_a < pointer_b:
+    if arr[pointer_a] + arr[pointer_b] == M:
+        cnt += 1
+        pointer_a += 1
+        pointer_b -= 1
+    elif arr[pointer_a] + arr[pointer_b] > M:
+        pointer_b -= 1
+    elif arr[pointer_a] + arr[pointer_b] < M:
+        pointer_a += 1
 
 print(cnt)
