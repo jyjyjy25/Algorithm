@@ -1,17 +1,21 @@
+#10:56
+
 def solution(people, limit):
     answer = 0
     
     people.sort()
-    l = 0
-    r = len(people)-1
-    
-    while(l <= r):       
-        if l < r and people[l] + people[r] <= limit:
+    s, e = 0, len(people)-1
+    while s <= e:
+        if s == e:
             answer += 1
-            l += 1
-            r -= 1
-        else:
-            answer += 1
-            r -= 1  
+            break
         
+        if people[s] + people[e] > limit:
+            e -= 1
+        elif people[s] + people[e] <= limit:
+            s += 1
+            e -= 1
+        
+        answer += 1
+ 
     return answer
