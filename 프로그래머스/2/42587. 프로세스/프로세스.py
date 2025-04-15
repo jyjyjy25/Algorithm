@@ -1,23 +1,23 @@
+# 19:53~
 from collections import deque
 
 def solution(priorities, location):
-    answer = 0     
+    new_priorities = []
+    for i, p in enumerate(priorities):
+        new_priorities.append((p, i))
     
-    queue = [(i,p) for i,p in enumerate(priorities)]
-    queue = deque(queue)
-    while (queue):
-        x = queue.popleft()
-        is_pop = True
-        for q in queue:
-            if q[1] > x[1]:
-                queue.append(x)
-                is_pop = False
+    priorities = deque(new_priorities)
+    order = 0
+    while priorities:
+        max_priority = priorities.popleft()
+        is_excute = True
+        for p in priorities:
+            if p[0] > max_priority[0]:
+                priorities.append(max_priority)
+                is_excute = False
                 break
         
-        if is_pop:
-            answer += 1
-        
-        if is_pop and x[0] == location:
-            break
-                
-    return answer
+        if is_excute:
+            order += 1
+            if max_priority[1] == location:
+                return order
