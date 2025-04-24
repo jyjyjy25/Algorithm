@@ -1,0 +1,21 @@
+-- 코드를 입력하세요
+WITH TLB AS (
+    SELECT NAME, COUNT(*) AS COUNT
+    FROM ANIMAL_INS
+    WHERE NAME IS NOT NULL
+    GROUP BY NAME
+)
+
+SELECT *
+FROM TLB
+WHERE COUNT > 1
+ORDER BY NAME
+
+# select 
+#     name,
+#     count(*) as COUNT
+# from animal_ins
+# where name is not null
+# group by name
+# having COUNT > 1
+# order by name;
