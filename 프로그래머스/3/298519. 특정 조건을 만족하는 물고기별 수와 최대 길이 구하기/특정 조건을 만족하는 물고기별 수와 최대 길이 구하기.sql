@@ -1,12 +1,21 @@
--- 코드를 작성해주세요
+# -- 코드를 작성해주세요
+WITH TLB AS (
+    SELECT *, CASE
+                WHEN LENGTH <= 10 or LENGTH IS NULL THEN 10
+                ELSE LENGTH
+              END AS FINALLY_LENGTH
+    FROM FISH_INFO
+)
+
 SELECT
     COUNT(*) as FISH_COUNT,
-    MAX(LENGTH) as MAX_LENGTH,
+    MAX(FINALLY_LENGTH) as MAX_LENGTH,
     FISH_TYPE
 FROM
-    FISH_INFO
+    TLB
 GROUP BY
     FISH_TYPE
 HAVING
-    AVG(LENGTH) >= 33
-ORDER BY FISH_TYPE
+    AVG(FINALLY_LENGTH) >= 33
+ORDER BY 
+    FISH_TYPE
