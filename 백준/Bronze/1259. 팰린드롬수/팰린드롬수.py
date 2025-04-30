@@ -1,15 +1,24 @@
-while(True):
-    x = input()
-    if (x == '0'):
+import sys
+
+while True:
+    input_num = str(sys.stdin.readline().strip())
+    if input_num == "0":
         break
 
-    check = True
-    for i in range(len(x)//2):
-        if (x[i] != x[-i-1]):
-            check = False
+    l, r = 0, len(input_num) - 1
+    FLAG = True
+    while l <= r:
+        if l == r:
             break
-    
-    if check:
+
+        if input_num[l] == input_num[r]:
+            l += 1
+            r -= 1
+        else:
+            FLAG = False
+            break
+
+    if FLAG:
         print('yes')
     else:
         print('no')
