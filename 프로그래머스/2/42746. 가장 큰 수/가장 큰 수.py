@@ -1,4 +1,7 @@
+#4:27
+
 def solution(numbers):
-    numbers = list(map(str, numbers))
-    numbers.sort(reverse=True, key=lambda x: x*3)
-    return str(int("".join(numbers)))
+    str_nums = list(map(str, numbers))
+    str_nums.sort(reverse=True, key=lambda x: str(x)*(6//len(x)))
+    answer = "".join(str_nums)
+    return str(int(answer))
