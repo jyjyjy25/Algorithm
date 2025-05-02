@@ -4,13 +4,8 @@ from collections import deque
 F, S, G, U, D = map(int, sys.stdin.readline().split())
 
 def BFS(x):
-    queue = deque([])
-    if 1 <= S + U <= F:
-        queue.append((S+U, 1))
-        visited[S+U] = True
-    if 1 <= S - D <= F:
-        queue.append((S-D, 1))
-        visited[S-D] = True
+    queue = deque([(x, 0)])
+    visited[x] = True
     
     while queue:
         floor, d = queue.popleft()
@@ -27,8 +22,6 @@ def BFS(x):
     else:
         print("use the stairs")
 
-if S == G:
-    print(0)
-else:
-    visited = [False for _ in range(F+1)]
-    BFS(S)
+
+visited = [False for _ in range(F+1)]
+BFS(S)
