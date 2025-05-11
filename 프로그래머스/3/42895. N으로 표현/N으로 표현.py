@@ -12,35 +12,15 @@ def solution(N, number):
             if j == 0:
                 dp[i].add(int(str(N)*i))
                 continue
-               
-            num1 = int(str(N)*(i-j))
-            num2 = int(str(N)*j)
             
-            dp[i].add(num1+num2)
-            dp[i].add(num1-num2)
-            dp[i].add(num1*num2)
-            dp[i].add(num1//num2)
-            
-            for k in dp[j]:
-                dp[i].add(k+num1)
-                dp[i].add(k-num1)
-                dp[i].add(k*num1)
-                dp[i].add(k//num1)
-                
-                dp[i].add(num1-k)
-                if k != 0:
-                    dp[i].add(num1//k)
-                
-                for l in dp[i-j]:
-                    dp[i].add(k+l)
-                    dp[i].add(k-l)
-                    dp[i].add(k*l)
-                    if l != 0:
-                        dp[i].add(k//l)
-                    
-                    dp[i].add(l-k)
-                    if k != 0:
-                        dp[i].add(l//k)
+            for op1 in dp[j]:
+                for op2 in dp[i-j]:
+                    dp[i].add(op1+op2)
+                    dp[i].add(op1-op2)
+                    dp[i].add(op1-op2)
+                    dp[i].add(op1*op2)
+                    if op1 != 0: dp[i].add(op2//op1)
+                    if op2 != 0: dp[i].add(op1//op2)
         
         if number in dp[i]:
             return i
