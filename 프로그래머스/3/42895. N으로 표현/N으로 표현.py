@@ -1,27 +1,47 @@
+# 3:04~
+
 def solution(N, number):
-    answer = -1
+    if N == number:
+        return 1
     
-    dict = {}
-    for i in range(1, 9):
-        num = int(str(N)*i)
-        if num == number:
-            return i
-        
-        dict[i] = set()
-        dict[i].add(num)
+    dp = [set() for _ in range(10)]  #  dp[1] = N 1개로 만들 수 있는 모든 수
+    dp[1].add(N)
     
     for i in range(2, 9):
-        for j in range(1, i):
-            for op1 in dict[j]:
-                for op2 in dict[i-j]:
-                    dict[i].add(op1+op2)
-                    dict[i].add(op1-op2)
-                    dict[i].add(op1*op2)
-                    if op2 != 0:
-                        dict[i].add(op1//op2)
+        for j in range(0, i//2+1):
+            if j == 0:
+                dp[i].add(int(str(N)*i))
+                continue
+               
+            num1 = int(str(N)*(i-j))
+            num2 = int(str(N)*j)
+            
+            dp[i].add(num1+num2)
+            dp[i].add(num1-num2)
+            dp[i].add(num1*num2)
+            dp[i].add(num1//num2)
+            
+            for k in dp[j]:
+                dp[i].add(k+num1)
+                dp[i].add(k-num1)
+                dp[i].add(k*num1)
+                dp[i].add(k//num1)
+                
+                dp[i].add(num1-k)
+                if k != 0:
+                    dp[i].add(num1//k)
+                
+                for l in dp[i-j]:
+                    dp[i].add(k+l)
+                    dp[i].add(k-l)
+                    dp[i].add(k*l)
+                    if l != 0:
+                        dp[i].add(k//l)
+                    
+                    dp[i].add(l-k)
+                    if k != 0:
+                        dp[i].add(l//k)
         
-        if number in dict[i]:
+        if number in dp[i]:
             return i
-            break
-        
-    return answer
+    return -1
